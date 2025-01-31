@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moritzknoll <moritzknoll@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 10:18:23 by moritzknoll       #+#    #+#             */
-/*   Updated: 2024/10/30 10:28:09 by mknoll           ###   ########.fr       */
+/*   Updated: 2024/10/30 08:44:18 by moritzknoll      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (NULL);
 }
-// int main()
-// {
-//     char array[] = { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd'};
-//     char* result = ft_memchr(array, 'o', sizeof(array));
-//     char* result2 = memchr(array, 'o', sizeof(array));
+int main()
+{
+    char array[] = { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd'};
+    char* result = ft_memchr(array, 'o', sizeof(array));
+    char* result2 = memchr(array, 'o', sizeof(array));
 
-//     printf("%s\n", result);
-//     printf("%s", result2);
-// }
+    printf("%s\n", result);
+    printf("%s", result2);
+}

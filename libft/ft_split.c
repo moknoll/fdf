@@ -6,7 +6,7 @@
 /*   By: moritzknoll <moritzknoll@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:47:25 by moritzknoll       #+#    #+#             */
-/*   Updated: 2025/01/23 18:32:39 by moritzknoll      ###   ########.fr       */
+/*   Updated: 2024/10/30 09:21:06 by moritzknoll      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ char	**ft_split(char const *s, char c)
 // int main()
 // {
 // 	{
-//     const char *str = "ls -l";
-//     char delim = ' ';
+//     const char *str = "Hallo,World,this,is,a,Test";
+//     char delim = ',';
 //     int count;
 //     char **result;
 

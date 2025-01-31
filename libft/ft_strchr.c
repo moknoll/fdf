@@ -6,14 +6,14 @@
 /*   By: moritzknoll <moritzknoll@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:42:45 by mknoll            #+#    #+#             */
-/*   Updated: 2024/10/30 09:12:25 by moritzknoll      ###   ########.fr       */
+/*   Updated: 2025/01/30 14:44:58 by moritzknoll      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
@@ -32,11 +32,3 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
-
-// int main()
-// {
-// 	char	*str = " Hello World";
-
-// 	printf("%s", ft_strchr(str, 'W'));
-// 	printf("%s", strchr(str, 'W'));
-// }

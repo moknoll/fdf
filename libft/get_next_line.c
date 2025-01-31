@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
+/*   By: moritzknoll <moritzknoll@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:02:26 by mknoll            #+#    #+#             */
-/*   Updated: 2025/01/24 09:53:21 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/01/30 14:47:06 by moritzknoll      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*fill_line(int fd, char *left_c, char *buffer);
-static char	*seperate(char *line);
-char		*ft_strchr(const char *s, int c);
+// static char	*fill_line(int fd, char *left_c, char *buffer);
+// static char	*seperate(char *line);
+// static char	*ft_strchr(char *s, int c);
 
 char	*get_next_line(int fd)
 {
@@ -22,25 +22,27 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+	{
+		free(stat_char);
+		free(buffer);
+		stat_char = NULL;
+		buffer = NULL;
+		return (NULL);
+	}
 	if (!buffer)
 		return (NULL);
 	line = fill_line(fd, stat_char, buffer);
 	free(buffer);
 	buffer = NULL;
 	if (!line)
-	{
-		free(stat_char);
-		stat_char = NULL;
 		return (NULL);
-	}
 	stat_char = seperate(line);
 	return (line);
 }
 
-static char	*seperate(char *line_buffer)
+char	*seperate(char *line_buffer)
 {
 	char	*stat_char;
 	ssize_t	i;
@@ -60,7 +62,7 @@ static char	*seperate(char *line_buffer)
 	return (stat_char);
 }
 
-static char	*fill_line(int fd, char *stat_char, char *buffer)
+char	*fill_line(int fd, char *stat_char, char *buffer)
 {
 	ssize_t	b_read;
 	char	*tmp;
@@ -70,7 +72,7 @@ static char	*fill_line(int fd, char *stat_char, char *buffer)
 	{
 		b_read = read(fd, buffer, BUFFER_SIZE);
 		if (b_read == -1)
-			return (NULL);
+			return (free(stat_char), NULL);
 		else if (b_read == 0)
 			break ;
 		buffer[b_read] = 0;
@@ -86,18 +88,18 @@ static char	*fill_line(int fd, char *stat_char, char *buffer)
 	return (stat_char);
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	unsigned int	i;
+// static char	*ft_strchr(char *s, int c)
+// {
+// 	unsigned int	i;
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *) &s[i]);
-		i++;
-	}
-	if (s[i] == (char)c)
-		return ((char *) &s[i]);
-	return (NULL);
-}
+// 	i = 0;
+// 	while (s[i])
+// 	{
+// 		if (s[i] == (char)c)
+// 			return ((char *) &s[i]);
+// 		i++;
+// 	}
+// 	if (s[i] == (char)c)
+// 		return ((char *) &s[i]);
+// 	return (NULL);
+// }
