@@ -61,7 +61,7 @@ int	get_map_height(const char filename)
 		map_data->height++;
 		free(line);
 	}
-	return (height);
+	return (map_data->height);
 }
 
 // t_map	*parse_map(const char *filename)
