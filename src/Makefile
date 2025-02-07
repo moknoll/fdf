@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I../libft
 LDFLAGS = -L../libft -lft
-SRC = parsing.c
+SRC = parsing.c utils.c test.c
 OBJ = $(SRC:.c=.o)
 NAME = fdf
 

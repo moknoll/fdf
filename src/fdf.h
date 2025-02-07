@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:15:32 by mknoll            #+#    #+#             */
-/*   Updated: 2025/01/31 15:27:33 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:45:30 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
-
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*img_ptr;
+	char	*img_addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
 }	t_mlx_data;
 
 typedef struct s_map
@@ -31,4 +35,15 @@ typedef struct s_map
 	int	width;
 	int	height;
 }	t_map;
+
+int	*get_column(char *line, int *width);
+int	fd_open(const char *filename);
+t_map	*get_map(t_map *map, const char *filename);
+t_map	*allocate_map(t_map *map);
+
+void	free_tab(char **arr);
+int	get_map_width(char *line);
+int	get_map_height(const char *filename);
+
+
 #endif

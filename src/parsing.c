@@ -6,84 +6,92 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:20:10 by mknoll            #+#    #+#             */
-/*   Updated: 2025/02/04 13:04:21 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/02/07 15:12:32 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	free_tab(char **arr)
+int	*get_column(char *line, int *width)
 {
-	int	i;
+	char	**result;
+	int		*numbers;
+	int		i;
 
 	i = 0;
-	while (arr[i])
+	result = ft_split(line, ' ');
+	if (!result)
+		return (NULL);
+	numbers = malloc(sizeof(int) * (*width));
+	if (!numbers)
 	{
-		free(arr[i]);
+		free(result);
+		return (NULL);
+	}
+	while (i < *width)
+	{
+		numbers[i] = ft_atoi(result[i]);
+		free(result[i]);
 		i++;
 	}
-	free(arr);
+	free(result);
+	return (numbers);
 }
 
-int	get_map_width(char *line)
+int	fd_open(const char *filename)
 {
-	int		width;
-	char	**split;
-
-	width = 0;
-	split = ft_split(line, ' ');
-	while (split[width])
-		width++;
-	free_tab(split);
-	printf("%d", width);
-	return (width);
-}
-
-void	print_map_dimensions(t_map *map_data)
-{
-	// Funktion, um Höhe und Breite der Karte anzuzeigen
-	printf("Map Dimensions: \n");
-	printf("Width: %d\n", map_data->width);
-	printf("Height: %d\n", map_data->height);
-}
-
-int	get_map_height(const char *filename)
-{
-	int		fd;
-	t_map	*map_data;
-	char	*line;
+	int	fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return (1);
-	map_data = malloc(sizeof(t_map));
-	if (!map_data)
-		perror("malloc failed");
-	map_data->height = 0;
-	line = get_next_line(fd);
-	while (line != NULL)
 	{
-		if (map_data->height == 0)
-			map_data->width = get_map_width(line);	//if this is the first call check for width 
-		map_data->height++;
-		free(line);
-		line = get_next_line(fd);
+		perror("Error opening file");
+		return (-1);
 	}
-	print_map_dimensions(map_data);
-	close(fd);
-	free(map_data);
-	return (map_data->height);
+	return (fd);
 }
 
-// t_map	*parse_map(const char *filename)
-// {
-// }
-
-int main()
+t_map	*allocate_map(t_map *map)
 {
-	char *datei;
+	map = malloc(sizeof(t_map));
+	if (!map)
+	{
+		perror("Memory allocation failed");
+		return (NULL);
+	}
+	map->grid = malloc(sizeof(int *) * map->height);
+	if (!map->grid)
+	{
+		perror("Memory allocation failed for grid");
+		return (free(map), NULL);
+	}
+	return (map);
+}
 
-	datei = "map.txt";
+t_map	*get_map(t_map *map, const char *filename)
+{
+	int		fd;
+	int		i;
+	char	*line;
 
-	get_map_height(datei);
+	i = 0;
+	map = allocate_map(map);
+	map->height = get_map_height(filename);
+	if (map->height == 0)
+		return (free(map), NULL);
+	fd = fd_open(filename);
+	while (i < map->height)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		map->width = get_map_width(line);
+		map->grid[i] = get_column(line, &map->width);
+		if (!map->grid[i])
+			return (free(line), free(map), close(fd), NULL);
+		free(line);
+		i++;
+	}
+	close(fd);
+	return (map);
 }
