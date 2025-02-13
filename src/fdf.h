@@ -6,7 +6,7 @@
 /*   By: mknoll <mknoll@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:15:32 by mknoll            #+#    #+#             */
-/*   Updated: 2025/02/11 13:46:30 by mknoll           ###   ########.fr       */
+/*   Updated: 2025/02/13 12:55:06 by mknoll           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,19 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <math.h>
+# include <X11/keysym.h>
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
+#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 1920
+
+typedef struct {
+	int x;
+	int y;
+	int z;
+}	t_point;
+
 typedef struct s_map
 {
 	int	**grid;
@@ -42,11 +53,16 @@ void free_map(t_map *map);
 int	*get_column(char *line, int *width);
 int	fd_open(const char *filename);
 t_map	*get_map(t_map *map, const char *filename);
-t_map	*allocate_map(t_map *map);
+t_map *allocate_map(t_map *map);
 
 void	free_tab(char **arr);
 int	get_map_width(char *line);
 int	get_map_height(const char *filename);
+int close_window(t_mlx_data *data);
+void free_image(t_mlx_data *data);
 
-
+void isometric_projection(int *x, int *y, int z);
+void draw_line_bresenham(t_mlx_data *data, int x1, int y1, int x2, int y2, int color);
+void put_pixel(t_mlx_data *data, int x, int y, int color);
+int gradient(int min_val, int max_val, int value);
 #endif
